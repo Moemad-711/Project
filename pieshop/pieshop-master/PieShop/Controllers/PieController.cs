@@ -33,7 +33,7 @@ namespace PieShop.Controllers
             };
             return View(pieViewModel);
         }
-        [Authorize(Roles = "SuperUser")]
+        [Authorize(Roles = Constants.AdministratorRole)]
         public ViewResult AddPie()
         {
             DesertViewModel pieViewModel = new DesertViewModel

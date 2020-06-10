@@ -26,45 +26,6 @@ namespace PieShop.Models
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<StockItem> stockItems { get; set; }
 
-        
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            
-            var role = new IdentityRole {
-                Name = "SuperUser",
-                NormalizedName = "SUPERUSER"
-            };
-
-
-            builder.Entity<IdentityRole>().HasData(role);
-            PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
-            
-            var user = new IdentityUser 
-            { 
-                Email = "moemad.admin@admin.com", 
-                NormalizedEmail = "MOEMAD.ADMIN@ADMIN.COM", 
-                UserName = "moemad.admin@admin.com", 
-                NormalizedUserName = "MOEMAD.ADMIN@ADMIN.COM" 
-            };
-            
-            var passwordHash = passwordHasher.HashPassword(user, "Moemad@admin123");
-            user.PasswordHash = passwordHash;
-            
-            builder.Entity<IdentityUser>().HasData(user);
-            
-            IdentityUserRole<String> identityUserRole = new IdentityUserRole<String> 
-            { 
-                UserId = user.Id,
-                RoleId = role.Id
-            };
-
-            builder.Entity<IdentityUserRole<String>>().HasData(identityUserRole);
-            
-
-        }
-
 
     }
 }

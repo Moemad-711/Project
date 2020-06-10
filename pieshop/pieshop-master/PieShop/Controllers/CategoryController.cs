@@ -27,7 +27,7 @@ namespace PieShop.Controllers
             return View(DesertViewModel);
           
         }
-        [Authorize(Roles = "playing")]
+        [Authorize(Roles = Constants.AdministratorRole)]
         public ViewResult AddCategory()
         {
             return View();

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PieShop.Models;
 
 namespace PieShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200610223243_testRoles4")]
+    partial class testRoles4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,6 +46,15 @@ namespace PieShop.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "20866bff-487a-4f38-95bc-39e4dc76bede",
+                            ConcurrencyStamp = "5a3ab18e-2750-4f62-a93a-711a4847e948",
+                            Name = "SuperUser",
+                            NormalizedName = "SUPERUSER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -133,6 +144,24 @@ namespace PieShop.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "68e3822c-524c-4693-8100-5858a66adde7",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "4e5669d6-c428-4c97-9de0-8ba54500b71e",
+                            Email = "moemad.admin@admin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MOEMAD.ADMIN@ADMIN.COM",
+                            NormalizedUserName = "MOEMAD.ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAENIpLZhj8t73hK7i7sjWNCQnIDsZeL0y6Wv5L2x8yk3B/x8RqWiWTUYNs5cyQsjitg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "04f086c8-ba8d-491b-8975-01ad5ff6b469",
+                            TwoFactorEnabled = false,
+                            UserName = "moemad.admin@admin.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -196,6 +225,13 @@ namespace PieShop.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "68e3822c-524c-4693-8100-5858a66adde7",
+                            RoleId = "20866bff-487a-4f38-95bc-39e4dc76bede"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
