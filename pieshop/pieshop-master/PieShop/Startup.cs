@@ -30,11 +30,11 @@ namespace PieShop
                 options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //get identity service and bind it to our database store
             services.AddDefaultIdentity<IdentityUser>()
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<AppDbContext>();
 
-            //get identity service and bind it to our database store
 
             services.AddScoped<IPieRepository, PieRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
