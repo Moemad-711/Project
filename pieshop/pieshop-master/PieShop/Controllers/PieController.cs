@@ -33,17 +33,17 @@ namespace PieShop.Controllers
             };
             return View(pieViewModel);
         }
-        [Authorize]
+        [Authorize(Roles = "SuperUser")]
         public ViewResult AddPie()
         {
             DesertViewModel pieViewModel = new DesertViewModel
             {
-                Categories = _categoryRepository.Categories              
+                Categories = _categoryRepository.Categories
             };
             return View(pieViewModel);
         }
 
-        [Authorize]
+        [Authorize ]
         [HttpPost]
         public RedirectToActionResult AddPie(Pie pie)
         {
