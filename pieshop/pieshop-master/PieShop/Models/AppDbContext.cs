@@ -12,7 +12,8 @@ namespace PieShop.Models
     public class AppDbContext: IdentityDbContext<IdentityUser>
 
     {
-        
+
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base (options)
         {
             
@@ -29,8 +30,7 @@ namespace PieShop.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
-            
+
             
             var role = new IdentityRole {
                 Name = "SuperUser",
@@ -39,7 +39,6 @@ namespace PieShop.Models
 
 
             builder.Entity<IdentityRole>().HasData(role);
-            // var roleResult = _roleManager.CreateAsync(role);
             PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
             
             var user = new IdentityUser 
@@ -52,10 +51,9 @@ namespace PieShop.Models
             
             var passwordHash = passwordHasher.HashPassword(user, "Moemad@admin123");
             user.PasswordHash = passwordHash;
-            //var result =  _userManager.CreateAsync(user, "Moemad@admin123");
-            //var addRole = _userManager.AddToRoleAsync(user, "SuperUser");
-
+            
             builder.Entity<IdentityUser>().HasData(user);
+            
             IdentityUserRole<String> identityUserRole = new IdentityUserRole<String> 
             { 
                 UserId = user.Id,
@@ -66,5 +64,7 @@ namespace PieShop.Models
             
 
         }
+
+
     }
 }

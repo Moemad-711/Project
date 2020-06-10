@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PieShop.Models
 {
+    //[Table(name: "Pies")]
     public class Pie
     {
         public Guid PieId { get; set; }
