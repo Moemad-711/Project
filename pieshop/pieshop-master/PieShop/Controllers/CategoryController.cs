@@ -33,7 +33,7 @@ namespace PieShop.Controllers
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         [HttpPost]
         public RedirectToActionResult AddCategory(Category category)
         {

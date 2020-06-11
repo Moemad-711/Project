@@ -44,7 +44,7 @@ namespace PieShop.Controllers
             return View(pieViewModel);
         }
 
-        [Authorize ]
+        [Authorize(Roles = Constants.AdministratorRole)]
         [HttpPost]
         public RedirectToActionResult AddPie(Pie pie)
         {
@@ -61,7 +61,7 @@ namespace PieShop.Controllers
             }
             return RedirectToAction("Index");
         }
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         private string UploadedFile(Pie model)
         {
             string uniqueFileName = null;
@@ -98,7 +98,7 @@ namespace PieShop.Controllers
             return View(pieViewModel);
         }
 
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         [HttpPost]
         public RedirectToActionResult EditPie(Pie pie)
         {

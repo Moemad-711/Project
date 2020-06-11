@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PieShop.Migrations
 {
-    public partial class AddingGuid : Migration
+    public partial class ali : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -120,6 +120,30 @@ namespace PieShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShoppingCarts",
+                columns: table => new
+                {
+                    ShoppingCartId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.ShoppingCartId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "stockItems",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(nullable: false),
+                    name = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_stockItems", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -232,8 +256,7 @@ namespace PieShop.Migrations
                     OrderDetailId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(nullable: false),
-                    PieId = table.Column<Guid>(nullable: false),
-                    CakeId = table.Column<Guid>(nullable: false),
+                    stockitemId = table.Column<Guid>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false)
                 },
@@ -241,22 +264,16 @@ namespace PieShop.Migrations
                 {
                     table.PrimaryKey("PK_OrderDetails", x => x.OrderDetailId);
                     table.ForeignKey(
-                        name: "FK_OrderDetails_Cakes_CakeId",
-                        column: x => x.CakeId,
-                        principalTable: "Cakes",
-                        principalColumn: "CakeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_OrderDetails_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderDetails_Pies_PieId",
-                        column: x => x.PieId,
-                        principalTable: "Pies",
-                        principalColumn: "PieId",
+                        name: "FK_OrderDetails_stockItems_stockitemId",
+                        column: x => x.stockitemId,
+                        principalTable: "stockItems",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -264,10 +281,8 @@ namespace PieShop.Migrations
                 name: "ShoppingCartItems",
                 columns: table => new
                 {
-                    ShoppingCartItemId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PieId = table.Column<Guid>(nullable: true),
-                    CakeId = table.Column<Guid>(nullable: true),
+                    ShoppingCartItemId = table.Column<Guid>(nullable: false),
+                    stockitemid = table.Column<Guid>(nullable: true),
                     Amount = table.Column<int>(nullable: false),
                     ShoppingCartId = table.Column<string>(nullable: true)
                 },
@@ -275,16 +290,16 @@ namespace PieShop.Migrations
                 {
                     table.PrimaryKey("PK_ShoppingCartItems", x => x.ShoppingCartItemId);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItems_Cakes_CakeId",
-                        column: x => x.CakeId,
-                        principalTable: "Cakes",
-                        principalColumn: "CakeId",
+                        name: "FK_ShoppingCartItems_ShoppingCarts_ShoppingCartId",
+                        column: x => x.ShoppingCartId,
+                        principalTable: "ShoppingCarts",
+                        principalColumn: "ShoppingCartId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItems_Pies_PieId",
-                        column: x => x.PieId,
-                        principalTable: "Pies",
-                        principalColumn: "PieId",
+                        name: "FK_ShoppingCartItems_stockItems_stockitemid",
+                        column: x => x.stockitemid,
+                        principalTable: "stockItems",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -328,29 +343,24 @@ namespace PieShop.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_CakeId",
-                table: "OrderDetails",
-                column: "CakeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderId",
                 table: "OrderDetails",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_PieId",
+                name: "IX_OrderDetails_stockitemId",
                 table: "OrderDetails",
-                column: "PieId");
+                column: "stockitemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItems_CakeId",
+                name: "IX_ShoppingCartItems_ShoppingCartId",
                 table: "ShoppingCartItems",
-                column: "CakeId");
+                column: "ShoppingCartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItems_PieId",
+                name: "IX_ShoppingCartItems_stockitemid",
                 table: "ShoppingCartItems",
-                column: "PieId");
+                column: "stockitemid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -371,10 +381,16 @@ namespace PieShop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Cakes");
+
+            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");
+
+            migrationBuilder.DropTable(
+                name: "Pies");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCartItems");
@@ -389,10 +405,10 @@ namespace PieShop.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Cakes");
+                name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
-                name: "Pies");
+                name: "stockItems");
         }
     }
 }
