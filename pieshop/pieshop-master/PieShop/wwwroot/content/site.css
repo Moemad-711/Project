@@ -7,11 +7,27 @@
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     background-image: url('../images/BackGround.png');
+    /*background-position: center center;*/
     background-repeat: no-repeat;
-    background-size: auto;
-    /*margin: 0;*/
+    background-size: cover;
+    margin: 0;
 }
 
+h4{
+    color:aliceblue
+}
+
+h2 {
+    color: aliceblue
+}
+
+h6 {
+    color:aliceblue
+}
+
+label {
+    color:aliceblue
+}
 
 .slide-image {
     width: 100%;
