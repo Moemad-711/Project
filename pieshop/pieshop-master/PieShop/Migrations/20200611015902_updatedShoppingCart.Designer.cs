@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PieShop.Models;
 
 namespace PieShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200611015902_updatedShoppingCart")]
+    partial class updatedShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -397,9 +399,11 @@ namespace PieShop.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("userId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ShoppingCartId");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("ShoppingCarts");
                 });
@@ -509,6 +513,13 @@ namespace PieShop.Migrations
                         .HasForeignKey("stockitemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PieShop.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("PieShop.Models.ShoppingCartItem", b =>

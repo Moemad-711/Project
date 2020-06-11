@@ -45,6 +45,8 @@ namespace PieShop.Controllers
                 _shoppingCart.ClearCart();
                 return RedirectToAction("CheckoutComplete");
             }
+
+
             return View(order);
         }
 

@@ -35,7 +35,6 @@ namespace PieShop
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<AppDbContext>();
 
-
             services.AddScoped<IPieRepository, PieRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IStockItemRepository, StockItemRepository>();

@@ -6,6 +6,9 @@ using PieShop.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using System.ComponentModel.DataAnnotations;
 
 namespace PieShop.Models
 {
@@ -14,7 +17,10 @@ namespace PieShop.Models
         private readonly AppDbContext _appDbContext;
         private readonly IStockItemRepository stockItemRepository;
 
+        [Key]
         public string ShoppingCartId { get; set; }
+
+        public string userId { get; set; }
 
         public List<ShoppingCartItem> ShoppingCartItems { get; set; }
 
@@ -28,29 +34,40 @@ namespace PieShop.Models
             _appDbContext = appDbContext;
         }
 
+   
         public static ShoppingCart GetCart(IServiceProvider services)
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?
                 .HttpContext.Session;
 
+            var httpContext = services.GetRequiredService<IHttpContextAccessor>().HttpContext;
             var context = services.GetService<AppDbContext>();
+            
+            var currentUserId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var stockItemRepo = services.GetService<IStockItemRepository>();
 
             //string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
-            string cartId = session.GetString("CartId");
-            if (cartId == null)
+            //string cartId = session.GetString("CartId");
+            var shoppingCart = context.ShoppingCarts.FirstOrDefault(s => s.userId == currentUserId);
+            if (shoppingCart != null)
             {
-                cartId = Guid.NewGuid().ToString();
-                var ShoppingCart = new ShoppingCart(context, stockItemRepo)
+                string cartId = shoppingCart.ShoppingCartId;
+            }
+            else 
+            {
+                 
+                shoppingCart = new ShoppingCart(context, stockItemRepo)
                 {
-                    ShoppingCartId = cartId
+                    ShoppingCartId = Guid.NewGuid().ToString(),
+                    userId = currentUserId
                 };
-                context.ShoppingCarts.Add(ShoppingCart);
+                context.ShoppingCarts.Add(shoppingCart);
                 context.SaveChanges();
             }
-            session.SetString("CartId", cartId);
 
-            return new ShoppingCart(context, stockItemRepo) { ShoppingCartId = cartId };
+            session.SetString("CartId", shoppingCart.ShoppingCartId);
+
+            return new ShoppingCart(context, stockItemRepo) { ShoppingCartId = shoppingCart.ShoppingCartId};
         }
 
         public void AddToCart(Pie pie, int amount)
@@ -58,7 +75,9 @@ namespace PieShop.Models
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
                         s => s.stockitem.name == pie.PieName && s.ShoppingCartId == ShoppingCartId);
+
             var stockItem = stockItemRepository.GetStockItemByName(pie.PieName);
+
             if (shoppingCartItem == null)
             {
                 shoppingCartItem = new ShoppingCartItem
@@ -76,6 +95,7 @@ namespace PieShop.Models
             }
             _appDbContext.SaveChanges();
         }
+
         public void AddToCart(Cake cake, int amount)
         {
             var shoppingCartItem =

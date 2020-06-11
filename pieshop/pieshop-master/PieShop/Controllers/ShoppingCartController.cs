@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using PieShop.Models;
 using PieShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,6 +35,7 @@ namespace PieShop.Controllers
 
             return View(shoppingCartViewModel);
         }
+        [Authorize]
         public RedirectToActionResult AddToCart(Guid id)
         {
             var pie = _pieRepository.GetPieById(id);
