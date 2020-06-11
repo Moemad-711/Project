@@ -12,6 +12,8 @@ namespace PieShop.Models
         [BindNever]
         public int OrderId { get; set; }
 
+        public string UserId { get; set; }
+
         public List<OrderDetail> OrderDetails { get; set; }
 
         [Required(ErrorMessage = "Please enter your first name")]

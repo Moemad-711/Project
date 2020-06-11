@@ -1,8 +1,11 @@
-﻿using PieShop.Models;
+﻿using Microsoft.AspNetCore.Http;
+using PieShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
+
 
 namespace PieShop.Models
 {
@@ -10,16 +13,24 @@ namespace PieShop.Models
     {
         private readonly AppDbContext _appDbContext;
         private readonly ShoppingCart _shoppingCart;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderRepository(AppDbContext appDbContext, ShoppingCart shoppingCart)
+        public OrderRepository(AppDbContext appDbContext, ShoppingCart shoppingCart, IHttpContextAccessor httpContextAccessor)
         {
             _appDbContext = appDbContext;
             _shoppingCart = shoppingCart;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public void CreateOrder(Order order)
         {
+            
             order.OrderPlaced = DateTime.Now;
+
+
+            var currentUserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            order.UserId = currentUserId;
 
             var shoppingCartItems = _shoppingCart.ShoppingCartItems;
             order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
