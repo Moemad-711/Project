@@ -28,10 +28,13 @@
                         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-controller="Pie" asp-action="Index">Pies</a></li>
                         <li><a asp-controller="Cake" asp-action="Index">Cakes</a></li>
-                        <li><a asp-controller="Pie" asp-action="AddPie">Add Pie</a></li>
-                        <li><a asp-controller="Cake" asp-action="AddCake">Add Cake</a></li>
                         <li><a asp-controller="Category" asp-action="Index">Categories</a></li>
-                        <li><a asp-controller="Category" asp-action="AddCategory">Add Category</a></li>
+                        @if (User.IsInRole(Constants.AdministratorRole))
+                        {
+                            <li><a asp-controller="Pie" asp-action="AddPie">Add Pie</a></li>
+                            <li><a asp-controller="Cake" asp-action="AddCake">Add Cake</a></li>
+                            <li><a asp-controller="Category" asp-action="AddCategory">Add Category</a></li>
+                        }
                         <partial name="_LoginPartial" />
                     </ul>
                 </div>

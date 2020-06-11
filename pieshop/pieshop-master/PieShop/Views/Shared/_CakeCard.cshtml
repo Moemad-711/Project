@@ -19,19 +19,22 @@
                    asp-route-id="@Model.CakeId">Add to cart</a>
             </p>
 
-            <p class="button" style="display:inline-block">
-                <a class="btn btn-danger"
-                   asp-controller="Cake"
-                   asp-action="RemoveCake"
-                   asp-route-id="@Model.CakeId">Remove</a>
-            </p>
+            @if (User.IsInRole(Constants.AdministratorRole))
+            {
+                <p class="button" style="display:inline-block">
+                    <a class="btn btn-danger"
+                       asp-controller="Cake"
+                       asp-action="RemoveCake"
+                       asp-route-id="@Model.CakeId">Remove</a>
+                </p>
 
-            <p class="button" style="display:inline-block">
-                <a class="btn btn-secondary"
-                   asp-controller="Cake"
-                   asp-action="EditCake"
-                   asp-route-id="@Model.CakeId">Edit</a>
-            </p>
+                <p class="button" style="display:inline-block">
+                    <a class="btn btn-secondary"
+                       asp-controller="Cake"
+                       asp-action="EditCake"
+                       asp-route-id="@Model.CakeId">Edit</a>
+                </p>
+            }
         </div>
     </div>
 </div>

@@ -40,7 +40,7 @@ namespace PieShop
         private static async Task EnsureTestAdminAsync(UserManager<IdentityUser> userManager)
         {
             var testAdmin = await userManager.Users
-                .Where(x => x.UserName == "admin@todo.local")
+                .Where(x => x.UserName == "moemad.admin@admin.com")
                 .SingleOrDefaultAsync();
 
             if (testAdmin != null) return;

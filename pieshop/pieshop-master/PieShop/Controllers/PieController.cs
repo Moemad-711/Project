@@ -33,6 +33,7 @@ namespace PieShop.Controllers
             };
             return View(pieViewModel);
         }
+
         [Authorize(Roles = Constants.AdministratorRole)]
         public ViewResult AddPie()
         {
@@ -77,7 +78,7 @@ namespace PieShop.Controllers
             }
             return uniqueFileName;
         }
-        [Authorize]
+        [Authorize (Roles = Constants.AdministratorRole)]
         public RedirectToActionResult RemovePie(Guid id)
         {
              var pie =  _pieRepository.GetPieById(id);
@@ -85,7 +86,7 @@ namespace PieShop.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         public ViewResult EditPie(Guid id)
         {
             var pie = _pieRepository.GetPieById(id);
