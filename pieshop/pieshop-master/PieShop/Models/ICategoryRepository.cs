@@ -9,5 +9,6 @@ namespace PieShop.Models
     {
         IEnumerable<Category> Categories { get; }
         public void CreateCategory(Category category);
+        public void RemoveCategory(Category category);
     }
 }

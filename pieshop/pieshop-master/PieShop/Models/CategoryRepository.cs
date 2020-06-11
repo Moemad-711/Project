@@ -19,5 +19,12 @@ namespace PieShop.Models
             _appDbContext.Categories.Add(category);
             _appDbContext.SaveChanges();
         }
+
+        public void RemoveCategory(Category category)
+        {
+            _appDbContext.Categories.Remove(category);
+            _appDbContext.SaveChanges();
+        }
+
     }
 }

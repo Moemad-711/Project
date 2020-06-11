@@ -703,3 +703,4 @@ C:\Users\Mohamed aly\Documents\New folder\Project\pieshop\pieshop-master\PieShop
 C:\Users\Mohamed aly\Documents\New folder\Project\pieshop\pieshop-master\PieShop\obj\Debug\netcoreapp3.1\PieShop.dll
 C:\Users\Mohamed aly\Documents\New folder\Project\pieshop\pieshop-master\PieShop\obj\Debug\netcoreapp3.1\PieShop.pdb
 C:\Users\Mohamed aly\Documents\New folder\Project\pieshop\pieshop-master\PieShop\obj\Debug\netcoreapp3.1\PieShop.genruntimeconfig.cache
+D:\Software Projects\CollegeResearchProjects\Project\pieshop\pieshop-master\PieShop\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CategoryCard.cshtml.g.cs
