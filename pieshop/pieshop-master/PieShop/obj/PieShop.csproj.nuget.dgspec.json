@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Software Projects\\CollegeResearchProjects\\Project\\pieshop\\pieshop-master\\PieShop\\PieShop.csproj": {}
+    "C:\\Users\\Mohamed aly\\Documents\\New folder\\Project\\pieshop\\pieshop-master\\PieShop\\PieShop.csproj": {}
   },
   "projects": {
-    "D:\\Software Projects\\CollegeResearchProjects\\Project\\pieshop\\pieshop-master\\PieShop\\PieShop.csproj": {
+    "C:\\Users\\Mohamed aly\\Documents\\New folder\\Project\\pieshop\\pieshop-master\\PieShop\\PieShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Software Projects\\CollegeResearchProjects\\Project\\pieshop\\pieshop-master\\PieShop\\PieShop.csproj",
+        "projectUniqueName": "C:\\Users\\Mohamed aly\\Documents\\New folder\\Project\\pieshop\\pieshop-master\\PieShop\\PieShop.csproj",
         "projectName": "PieShop",
-        "projectPath": "D:\\Software Projects\\CollegeResearchProjects\\Project\\pieshop\\pieshop-master\\PieShop\\PieShop.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "D:\\Software Projects\\CollegeResearchProjects\\Project\\pieshop\\pieshop-master\\PieShop\\obj\\",
+        "projectPath": "C:\\Users\\Mohamed aly\\Documents\\New folder\\Project\\pieshop\\pieshop-master\\PieShop\\PieShop.csproj",
+        "packagesPath": "C:\\Users\\Mohamed aly\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mohamed aly\\Documents\\New folder\\Project\\pieshop\\pieshop-master\\PieShop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mohamed aly\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

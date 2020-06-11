@@ -10,8 +10,8 @@ using PieShop.Models;
 namespace PieShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200610212007_TestAddRole3")]
-    partial class TestAddRole3
+    [Migration("20200611003843_ali")]
+    partial class ali
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,15 +46,6 @@ namespace PieShop.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a6d479ab-1f0b-47e3-85a4-55b746079764",
-                            ConcurrencyStamp = "7c7ae802-25da-4340-9310-c31a91ceae7e",
-                            Name = "SuperUser",
-                            NormalizedName = "SUPERUSER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -144,24 +135,6 @@ namespace PieShop.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "474f3fda-2778-4fbc-bcdd-0e4bd655aad8",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "89820287-7a41-401e-b992-1be51147cd87",
-                            Email = "moemad.admin@admin.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "MOEMAD.ADMIN@ADMIN.COM",
-                            NormalizedUserName = "MOEMAD.ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHw88776v5VfcnSvWCiSsQPAwCaLjSA46qky9lNcnh75cYdCp+Cs3RgW1YwyQHHTaw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "7894854e-6bd4-408d-8353-657287cacb47",
-                            TwoFactorEnabled = false,
-                            UserName = "moemad.admin@admin.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -225,13 +198,6 @@ namespace PieShop.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "474f3fda-2778-4fbc-bcdd-0e4bd655aad8",
-                            RoleId = "a6d479ab-1f0b-47e3-85a4-55b746079764"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -427,23 +393,34 @@ namespace PieShop.Migrations
                     b.ToTable("Pies");
                 });
 
+            modelBuilder.Entity("PieShop.Models.ShoppingCart", b =>
+                {
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ShoppingCartId");
+
+                    b.ToTable("ShoppingCarts");
+                });
+
             modelBuilder.Entity("PieShop.Models.ShoppingCartItem", b =>
                 {
-                    b.Property<int>("ShoppingCartItemId")
+                    b.Property<Guid>("ShoppingCartItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
                     b.Property<string>("ShoppingCartId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid?>("stockitemid")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ShoppingCartItemId");
+
+                    b.HasIndex("ShoppingCartId");
 
                     b.HasIndex("stockitemid");
 
@@ -535,6 +512,10 @@ namespace PieShop.Migrations
 
             modelBuilder.Entity("PieShop.Models.ShoppingCartItem", b =>
                 {
+                    b.HasOne("PieShop.Models.ShoppingCart", null)
+                        .WithMany("ShoppingCartItems")
+                        .HasForeignKey("ShoppingCartId");
+
                     b.HasOne("PieShop.Models.StockItem", "stockitem")
                         .WithMany()
                         .HasForeignKey("stockitemid");

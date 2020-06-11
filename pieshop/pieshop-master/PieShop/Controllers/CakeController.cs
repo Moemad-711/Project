@@ -34,7 +34,7 @@ namespace PieShop.Controllers
             };
             return View(CakeViewModel);
         }
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         public ViewResult AddCake()
         {
             DesertViewModel CakeViewModel = new DesertViewModel
@@ -44,7 +44,7 @@ namespace PieShop.Controllers
             return View(CakeViewModel);
         }
 
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         [HttpPost]
         public RedirectToActionResult AddCake(Cake cake)
         {
@@ -61,7 +61,7 @@ namespace PieShop.Controllers
             }
             return RedirectToAction("Index");
         }
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         private string UploadedFile(Cake model )
         {
             string uniqueFileName = null;
@@ -79,7 +79,7 @@ namespace PieShop.Controllers
            
             return uniqueFileName;
         }
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         public RedirectToActionResult RemoveCake(Guid id)
         {
             var cake = _CakeRepository.GetCakeById(id);
@@ -87,7 +87,7 @@ namespace PieShop.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         public ViewResult EditCake(Guid id)
         {
             var cake = _CakeRepository.GetCakeById(id);
@@ -99,7 +99,7 @@ namespace PieShop.Controllers
             return View(CakeViewModel);
         }
 
-        [Authorize]
+        [Authorize(Roles = Constants.AdministratorRole)]
         [HttpPost]
         public RedirectToActionResult EditCake(Cake cake)
         {

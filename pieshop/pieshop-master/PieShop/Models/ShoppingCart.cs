@@ -23,6 +23,10 @@ namespace PieShop.Models
             _appDbContext = appDbContext;
             this.stockItemRepository = stockItemRepository;
         }
+        private ShoppingCart(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
 
         public static ShoppingCart GetCart(IServiceProvider services)
         {
@@ -32,8 +36,18 @@ namespace PieShop.Models
             var context = services.GetService<AppDbContext>();
             var stockItemRepo = services.GetService<IStockItemRepository>();
 
-            string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
-
+            //string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
+            string cartId = session.GetString("CartId");
+            if (cartId == null)
+            {
+                cartId = Guid.NewGuid().ToString();
+                var ShoppingCart = new ShoppingCart(context, stockItemRepo)
+                {
+                    ShoppingCartId = cartId
+                };
+                context.ShoppingCarts.Add(ShoppingCart);
+                context.SaveChanges();
+            }
             session.SetString("CartId", cartId);
 
             return new ShoppingCart(context, stockItemRepo) { ShoppingCartId = cartId };
@@ -44,9 +58,6 @@ namespace PieShop.Models
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
                         s => s.stockitem.name == pie.PieName && s.ShoppingCartId == ShoppingCartId);
-
-            
-
             var stockItem = stockItemRepository.GetStockItemByName(pie.PieName);
             if (shoppingCartItem == null)
             {

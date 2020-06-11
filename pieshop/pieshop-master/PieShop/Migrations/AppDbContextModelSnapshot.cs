@@ -391,23 +391,34 @@ namespace PieShop.Migrations
                     b.ToTable("Pies");
                 });
 
+            modelBuilder.Entity("PieShop.Models.ShoppingCart", b =>
+                {
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ShoppingCartId");
+
+                    b.ToTable("ShoppingCarts");
+                });
+
             modelBuilder.Entity("PieShop.Models.ShoppingCartItem", b =>
                 {
-                    b.Property<int>("ShoppingCartItemId")
+                    b.Property<Guid>("ShoppingCartItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
                     b.Property<string>("ShoppingCartId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid?>("stockitemid")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ShoppingCartItemId");
+
+                    b.HasIndex("ShoppingCartId");
 
                     b.HasIndex("stockitemid");
 
@@ -499,6 +510,10 @@ namespace PieShop.Migrations
 
             modelBuilder.Entity("PieShop.Models.ShoppingCartItem", b =>
                 {
+                    b.HasOne("PieShop.Models.ShoppingCart", null)
+                        .WithMany("ShoppingCartItems")
+                        .HasForeignKey("ShoppingCartId");
+
                     b.HasOne("PieShop.Models.StockItem", "stockitem")
                         .WithMany()
                         .HasForeignKey("stockitemid");
